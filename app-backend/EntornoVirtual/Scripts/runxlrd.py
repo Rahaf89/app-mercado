@@ -1,4 +1,4 @@
-#!c:\users\elias\onedrive\escritorio\supermercadopelao\app-backend\entornovirtual\scripts\python.exe
+#!c:\users\rahaf\desktop\app-mercado\app-mercado\app-backend\entornovirtual\scripts\python.exe
 # Copyright (c) 2005-2012 Stephen John Machin, Lingfo Pty Ltd
 # This script is part of the xlrd package, which is released under a
 # BSD-style licence.

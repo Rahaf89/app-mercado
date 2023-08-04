@@ -1,4 +1,4 @@
-#!c:\users\elias\onedrive\escritorio\supermercadopelao\app-backend\entornovirtual\scripts\python.exe
+#!c:\users\rahaf\desktop\app-mercado\app-mercado\app-backend\entornovirtual\scripts\python.exe
 
 """
 Converts PDF text content (though not images containing text) to plain text, html, xml or "tags".
