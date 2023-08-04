@@ -1,0 +1,20 @@
+<!-- Usuario del sistema -->
+
+<div class="container pt-3">
+  <div class="row justify-content-center px-md-5 px-2 py-4 card margin-container">
+
+      <div class="icon-add d-flex text-decoration-none mx-3" style="color: #1B0311!important;">
+      </div>
+
+      <div *ngFor="let publicacion of publicaciones; let indice=index" class="card mt-4">
+        <div class="d-flex card-header">
+          <div>
+              {{publicacion.text}}
+          </div>
+        </div>
+      <div id="spinner" class="pt-4 text-center" style="display: none">
+          <li class="fa fa-spin fa-spinner fa-2x"></li>
+      </div>
+
+  </div>
+</div>

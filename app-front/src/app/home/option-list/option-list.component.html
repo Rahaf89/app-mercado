@@ -1,0 +1,256 @@
+<ng-template #pagar let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Metodo de Pago</h4>
+
+        <button type="button" class="close" aria-label="Close" (click)="d('Cerrar')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+	<div class="modal-body">
+		<div class="col text-center">
+		  <div class="form-group">
+
+				<div class="card my-3">
+					<div class="text-center">
+						<h4 class="py-3 my-0">Presupuesto</h4>
+
+						<table class="table">
+							<thead>
+								<th scope="col">Nombre del Producto</th>
+								<th scope="col">Codigo</th>
+								<th scope="col">Monto</th>
+								<th scope="col">Moneda</th>
+							</thead>
+							<tbody>
+								<tr *ngFor="let product of productsSelected; let indice=index">	
+									<td>{{ product.nombre }}</td>
+									<td>{{ product.codigo }}</td>
+									<td>{{ product.precio }}</td>
+									<td><b>{{ checkMoneda(product.moneda) }}</b></td>
+								</tr>
+								<tr>	
+									<td><b>Total</b></td>
+									<td></td>
+									<td>{{ amountFacture() }}</td>
+									<td><b>{{ checkMoneda(productsSelected[0].moneda) }}</b></td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- <h2> {{ producto.precio }} {{ producto.moneda }}</h2> -->
+					</div>
+			</div>
+
+			 <form class="form-group w-100 card px-md-4 pb-md-4" [formGroup]="propertyForm2" novalidate>
+				  <h4 class="pt-3 my-0">Orden de Pago</h4>
+				  
+				  <hr>
+
+				  <div class="form-group">
+					<input type="text" class="form-control input-lg" name="" placeholder="Nombre del Titular" formControlName="Nombre">
+				  </div>
+
+				  <div class="form-group text-left">
+					<input type="number" class="form-control input-lg" name="" placeholder="Numero de Identificación" formControlName="NumeroIdentificacion">
+					<label for="NumeroReferencia" class="text-danger" *ngIf="emptyField('NumeroIdentificacion')" style="font-size: 12px;">
+						<span class="">*</span>
+						Este campo es obligatorio para confirmar el pago realizado.
+					</label>
+				  </div>
+
+				  <div class="form-group text-left">
+					<input type="number" class="form-control input-lg" name="" placeholder="Numero Telefónico" formControlName="NumeroTelefonico">
+					<label for="NumeroReferencia" class="text-danger" *ngIf="emptyField('NumeroTelefonico')" style="font-size: 12px;">
+						<span class="">*</span>
+						Este campo es obligatorio para confirmar el pago realizado.
+					</label>
+				  </div>
+
+				  <div class="form-group text-left">
+					<input type="number" class="form-control input-lg" name="" placeholder="Numero de Cuenta" formControlName="NumeroCuenta">
+					<label for="NumeroReferencia" class="text-danger" *ngIf="emptyField('NumeroCuenta')" style="font-size: 12px;">
+						<span class="">*</span>
+						Este campo es obligatorio para confirmar el pago realizado.
+					</label>
+				  </div>
+
+				  <div class="form-group text-left">
+					<input type="number" class="form-control input-lg" name="NumeroReferencia" placeholder="Numero de Referencia" formControlName="NumeroReferencia">
+					
+					<label for="NumeroReferencia" class="text-danger" *ngIf="emptyField('NumeroReferencia')" style="font-size: 12px;">
+						<span class="">*</span>
+						Este campo es obligatorio para confirmar el pago realizado.
+					</label>
+				  </div>
+
+				  <div class="form-group">
+					<input type="text" class="form-control input-lg" name="" placeholder="Nombre de la Cuenta" formControlName="NombreCuenta">
+				  </div>
+
+				  <div class="form-group">
+					<textarea type="text" style="max-height: 10vh; min-height: 10vh;" class="form-control input-lg" placeholder="Descripcion" formControlName="Descripcion"></textarea>
+				  </div>
+
+				  <div class="form-group text-left">
+					<ng-select [items]="tipos" class="custom" bindLabel="nombre" bindValue="id" formControlName="idTipoPago" placeholder="Seleccionar Método de Pago">
+					</ng-select>
+
+					<label for="NumeroReferencia" class="text-danger" *ngIf="emptyField('idTipoPago')" style="font-size: 12px;">
+						<span class="">*</span>
+						Este campo es obligatorio para confirmar el pago realizado.
+					</label>
+				  </div>
+
+				  <div class="form-group">
+					<button type="button" id="publicar_button" class="btn btn-warning" [disabled]="propertyForm2.invalid" (click)="setPayment();">
+						Enviar Orden
+					</button>
+				  </div>
+			</form>
+		  </div>
+		</div>
+  	</div>
+</ng-template>
+
+<ng-template #postContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Producto</h4>
+
+        <button type="button" class="close" aria-label="Close" (click)="d('Cerrar')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+	<div class="modal-body">
+		<div class="col text-center">
+		  <div class="form-group">
+			 <form class="form-group w-100" [formGroup]="propertyForm" novalidate>
+				  <div class="form-group">
+					<input type="text" class="form-control input-lg" name="" placeholder="Nombre" formControlName="Nombre">
+				  </div>
+
+				  <div class="form-group">
+					<input type="text" class="form-control input-lg" name="" placeholder="Codigo" formControlName="Codigo">
+				  </div>
+
+				  <div class="form-group">
+					<input type="text" class="form-control input-lg" name="" placeholder="Precio" formControlName="Precio">
+				  </div>
+
+				  <div class="form-group">
+					<input type="number" class="form-control input-lg" name="" placeholder="Cantidad" formControlName="Cantidad">
+				  </div>
+
+				  <ng-select [items]="monedas" class="custom" bindLabel="nombre" bindValue="id" formControlName="idMoneda" placeholder="Seleccionar Moneda">
+					</ng-select>
+
+				  <ng-select [items]="categorias" class="custom" bindLabel="nombre" bindValue="id" formControlName="idCategoria" placeholder="Seleccionar Categoria">
+					</ng-select>
+
+				  <div class="form-group">
+					<textarea type="text" style="max-height: 20vh; min-height: 20vh;" class="form-control input-lg" placeholder="Descripcion" formControlName="Descripcion"></textarea>
+				  </div>
+
+				  <div class="form-group text-left">
+					<div class="text-md-left">
+					  <img [src]="urlPreview" class="my-2" width="150" height="auto" *ngIf="this.urlPreview !== ''"> <br *ngIf="this.urlPreview !== ''">
+					  <button class="btn btn-service" id="botonInsertar" (click)="clickInsertarImagen()" *ngIf="this.urlPreview == ''"><i class="fa fa-image fa-1x"></i></button>
+					  <button class="btn btn-service" id="botonInsertar" (click)="clickInsertarImagen()" *ngIf="this.urlPreview !== ''"><i class="fa fa-edit fa-1x"></i></button>
+					  <button class="ml-2 btn btn-danger" id="botonEliminar" (click)="clickEliminarImagen()" *ngIf="this.urlPreview !== ''"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></button>
+					</div>
+					<input type="file" accept="image/png,image/jpeg" (change)="capturarImagen($event)" name="imagen" id="imagen" placeholder="Insertar Imagen*" style="width:100%; display: none">
+				  </div>
+
+				  <div class="form-group">
+					 <button type="button" id="publicar_button" class="btn btn-service" [disabled]="propertyForm.invalid" (click)="addProducto();">Agregar</button>
+				  </div>
+			</form>
+		  </div>
+		</div>
+  	</div>
+</ng-template>
+
+<div class="p-md-2 container">
+	<div  *ngIf="this.role == 'ADMIN'">
+		<a routerLink="/home/option-list" (click)="open(postContent, '')" 
+		class="icon-add d-flex text-decoration-none mx-3 mb-3 margin-container w-25" style="color: #001789!important">
+		<li class="fa fa-plus-circle" style="font-size: 2em"></li> 
+		<b style="font-size: 20px;" class="mx-2 my-auto" >Añadir producto</b>
+		</a>
+	</div>
+	<div class="mx-3 mb-3 margin-container w-25" *ngIf="this.role != 'ADMIN'">
+
+	</div>
+
+	<div class="form-check mb-3" *ngIf="!this.bSelect">
+		<button class="btn btn-service" (click)="clickEnableSelect()"> <b>Seleccionar Productos</b> </button>
+	</div>
+
+	<div class="container">
+		<div class="row">
+			<div class="form-check mb-3" *ngIf="this.bSelect">
+				<button class="btn btn-service" (click)="clickDisableSelect()"> <b>Quitar Selección de Productos</b> </button>
+			</div>
+
+			<div class="form-check mb-3" *ngIf="this.bSelect">
+				<button class="btn btn-success" (click)="openPayment(pagar)"> <b>Crear Carro de Compras</b> </button>
+			</div>
+		</div>
+	</div>
+
+	<div class="row px-md-0 px-2 justify-content-center" *ngIf="!this.bSelect">
+			<div id="activities-option" routerLink="/home/product/{{ product._id.$oid }}"
+				 [ngStyle]="{'background-image': 'url(http://127.0.0.1:8080/products/' + product.imagen + ')'}"
+				 *ngFor="let product of products; let indice=index"  
+				 class="card col-md-3 col-12 mx-md-1 p-0 my-2" >
+				<a class="text-decoration-none text-dark">
+					<div class="card-header text-center item-background font-letters-titles">
+						{{ product.nombre }}
+					</div>
+				</a>
+
+				<button class="button-money"><i class="fa fa-money mr-1"></i> {{ product.precio }} {{ checkMoneda(product.moneda) }}</button>
+				<button class="button-status">{{ product.estado }}</button>
+			</div>
+	</div>
+
+	<div class="row px-md-0 px-2 justify-content-center" *ngIf="this.bSelect">
+		<div id="activities-option"
+			 [ngStyle]="{'background-image': 'linear-gradient(rgb(48 56 48 / 60%), rgb(48 56 48 / 60%)), url(http://127.0.0.1:8080/products/' + product.imagen + ')'}"
+			 *ngFor="let product of products; let indice=index"  
+			 class="card col-md-3 col-12 mx-md-1 p-0 my-2">
+			<a class="text-decoration-none text-dark">
+				<div class="card-header text-center item-background font-letters-titles">
+					{{ product.nombre }}
+				</div>
+			</a>
+
+			<button class="button-money"><i class="fa fa-money mr-1"></i> {{ product.precio }} {{ product.moneda }}</button>
+			<button class="button-status">{{ product.estado }}</button>
+			<div class="form-check" style="position: absolute;top: 45%;left: 25%;">
+				<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" style="width: 25px; height: 25px;" (click)="addIdsProducts(product._id.$oid, $event)">
+				<label class="form-check-label text-white p-2" for="flexCheckDefault">
+					Agregar al Carro
+				</label>
+			</div>
+		</div>
+	</div>
+	<div class="row px-md-0 px-2 justify-content-center" style="margin-top: 20px;">
+		<h4>Recomendaciones:</h4>
+	</div>
+	<div class="row px-md-0 px-2 justify-content-center" style="margin-top: 20px;">
+			<div id="activities-option" routerLink="/home/product/{{ recomendacion._id.$oid }}"
+				 [ngStyle]="{'background-image': 'url(http://127.0.0.1:8080/products/' + recomendacion.imagen + ')'}"
+				 *ngFor="let recomendacion of recomendaciones; let indice=index"  
+				 class="card col-md-3 col-12 mx-md-1 p-0 my-2" >
+				<a class="text-decoration-none text-dark">
+					<div class="card-header text-center item-background font-letters-titles">
+						{{ recomendacion.nombre }}
+					</div>
+				</a>
+
+				<button class="button-money"><i class="fa fa-money mr-1"></i> {{ recomendacion.precio }} {{ checkMoneda(recomendacion.moneda) }}</button>
+				<button class="button-status">{{ recomendacion.estado }}</button>
+			</div>
+	</div>
+</div>

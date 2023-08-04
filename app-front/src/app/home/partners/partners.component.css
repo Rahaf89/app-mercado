@@ -1,0 +1,55 @@
+.margin-container{
+	margin-top: 9%
+}
+
+.icon-add{
+	color: #326291;
+	-webkit-transition: width 1s;
+	-moz-transition: width 1s;
+	-o-transition: width 1s;
+	transition: width 1s;
+	width: 400px;
+}
+
+.btn-service{
+	background-color: #326291!important;
+	color: white;
+}
+
+.bloque-partner{
+	background-color: white;
+}
+
+.bloque-partner:hover{
+	background-color: #ddced7;
+}
+
+td{
+	font-size: 14px
+}
+
+th{
+	font-size: 14px
+}
+
+::ng-deep .modal-mt .modal-dialog { 
+     margin-top: 10rem
+}
+
+@media (max-width: 450px){
+	.margin-container{
+		margin-top: 0px
+	}
+
+	::ng-deep .modal-mt .modal-dialog { 
+	     margin-top: 1rem
+	}
+	
+	td{
+		font-size: 12px
+	}
+
+	th{
+		font-size: 12px
+	}
+}

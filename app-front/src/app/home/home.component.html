@@ -1,0 +1,126 @@
+<header>
+	<nav [ngClass]="{'position-fixed': this.bLogger == true}" class="navbar navbar-dark bg-purple-black" style="text-align: right; box-shadow: 0px 7px 6px #0000003d;">
+		<a class="navbar-brand ml-md-4" routerLink="/home/option-list">
+		    <img src="assets/img/icono-mercado.jpg" class="d-inline-block align-top logo-size" alt="">
+		</a>
+
+		<a id="button-search" *ngIf="this.bLogger == true" class="size-search fa fa-search fa-1x logo-branding text-decoration-none" (click)="displaySearch()"></a>
+
+		<nav *ngIf="this.bLogger == true" class="navbar navbar-expand-lg navbar-light ml-auto width-md">
+		    <ul class="navbar-nav navbar-nav-app">
+		      <li class="nav-item mx-10 li-search margin-li" id="li-search-desktop">
+			      <form class="example-form" style="font-size: 12px;" (submit)="Gotouser()">
+					  <mat-form-field class="example-full-width" appearance="fill">
+					    <mat-label style="color: rgba(255,255,255,.5)"><span class="fa fa-search"></span> Buscar usuario </mat-label>
+					    <input type="search"
+					    	   id="search"
+					           aria-label="Usuario"
+					           (ngModelChange)="capturaChange($event)"
+					           style="color: rgba(255,255,255,.5)" 
+					           matInput
+					           [formControl]="myControl"
+					           [(ngModel)]="search"
+					           [matAutocomplete]="auto">
+					    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+					      <mat-option (click)="Gotouser()" *ngFor="let user of filteredUsers | async" [value]="user.correo" style="font-size: 12px;">
+					      	<img class="example-option-img" *ngIf="user.avatar !== ''" aria-hidden [src]="user.avatar" height="25" width="25">
+					      	<span>{{user.nombres}} {{user.apellidos}}</span>
+					      </mat-option>
+					    </mat-autocomplete>
+					  </mat-form-field>
+				  </form>
+			  </li>
+
+		      <li class="nav-item margin-li">
+		        <a class="nav-link" routerLink="/home/option-list" title="Home" (click)="collapseHide()"><i class="fa fa-home fa-2x"></i><span class="sr-only">(current)</span></a>
+		      </li>
+
+		      <!-- <li class="nav-item margin-li">
+		        <a class="nav-link" routerLink="/home/post" title="Publicación" (click)="collapseHide()" ><i class="fa fa-list-alt fa-2x"></i></a>
+		      </li> -->
+
+			  <li class="nav-item margin-li">
+		        <a class="nav-link" title="Publicaciones" routerLink="/home/post" (click)="collapseHide()"><i class="fa fa-hashtag fa-2x"></i></a>
+		      </li>
+			  <li class="nav-item margin-li" *ngIf="this.role == 'ADMIN'">
+		        <a class="nav-link" title="PublicacionesFake" routerLink="/home/postFakeNews" (click)="collapseHide()"><i class="fa fa-line-chart fa-2x"></i></a>
+		      </li>
+
+		      <!-- <li class="nav-item margin-li">
+		        <a class="nav-link" routerLink="/home/panel-messages" title="Mensajes" (click)="collapseHide()"><i class="fa fa-comment fa-2x"></i></a>
+		      </li> -->
+
+		      <li class="nav-item margin-li" style="position: relative;">
+		        <a class="nav-link" (click)="enableNotifications()" role="button" title="Notificaciones" (click)="collapseHide()"><i class="fa fa-bell fa-2x"></i></a>
+
+		       	<i *ngIf="this.notifications !== 0" class="text-center text-white burbuja-roja" (click)="enableNotifications()" role="button" (click)="collapseHide()">{{ this.notifications }}</i>
+
+		       	<div id="panel-notifications" class="width-notifications" *ngIf="bnotifications" style="position: absolute;right: 0;max-height: 85vh;overflow: auto;">
+					<div class="card px-3 py-2" *ngFor="let solicitud of solicitudes; let indice=index" >
+					    <div class="container">
+						    <div class="row">
+						        <div class="col-md-9">
+						            <p class="text-left mb-0" *ngIf="solicitud.idUserReceipt == this.correo"> El usuario <b>{{ solicitud.idUserTransmitter }}</b> le ha enviado una solicitud de amistad</p>
+
+	            		            <p class="text-left mb-0" *ngIf="solicitud.idUserTransmitter == this.correo && solicitud.accepted == 1"> El usuario <b>{{ solicitud.idUserReceipt }}</b> a aceptado su solicitud de amistad</p>
+
+	            		            <p class="text-left mb-0" *ngIf="solicitud.idUserTransmitter == this.correo && solicitud.accepted == 0"> Usted ha enviado una solicitud de amistad a <b>{{ solicitud.idUserReceipt }}</b></p>
+						        </div>
+
+						        <div class="col-md-3 d-flex">
+						            <button class="btn btn-primary my-auto" *ngIf="solicitud.idUserReceipt == this.correo && solicitud.accepted == 0" (click)="acceptedInvitations(solicitud._id)">Aceptar</button>
+						            <button class="btn btn-secondary my-auto" style="pointer-events: none;" *ngIf="solicitud.idUserReceipt == this.correo && solicitud.accepted == 1">Aceptado</button>
+						        </div>
+						    </div>
+						</div>
+					</div>
+				</div>
+
+		      </li>
+
+	
+
+		      <!-- <li class="nav-item margin-li">
+		        <a class="nav-link" routerLink="/home/contact-us" title="Como Encontrarnos" (click)="collapseHide()" ><i class="fa fa-hashtag fa-2x"></i></a>
+		      </li> -->
+
+		      <li class="nav-item dropdown margin-li">
+		        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		          <i class="fa fa-user-circle fa-2x"></i>
+		        </a>
+		        <div class="dropdown-menu dropdown-menu-responsive" aria-labelledby="navbarDropdownMenuLink">
+		          <a class="dropdown-item" (click)="Gotoprofile()"><i class="fa fa-user-circle"></i> Perfil</a>
+		          <!-- <a class="dropdown-item" routerLink="/home/activities"><i class="fa fa-list-ol"></i> Mis Citas</a> -->
+		          <a class="dropdown-item" routerLink="myproducts"><i class="fa fa-product-hunt"></i> Mis Productos</a>
+		          <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
+		        </div>
+		      </li>
+
+		    </ul>
+		</nav>
+
+        <form class="example-form form-search" id="form-search-mobile" *ngIf="this.bLogger == true" style="font-size: 12px; width: 100%;" (submit)="Gotouser()">
+		  <mat-form-field class="example-full-width" appearance="fill">
+		    <mat-label style="color: rgba(255,255,255,.5)"><span class="fa fa-search"></span> Buscar usuario </mat-label>
+		    <input type="search"
+		    	   id="search"
+		           aria-label="Usuario"
+		           (ngModelChange)="capturaChange($event)"
+		           style="color: rgba(255,255,255,.5)" 
+		           matInput
+		           [formControl]="myControl"
+		           [(ngModel)]="search"
+		           [matAutocomplete]="auto">
+		    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+		      <mat-option (click)="Gotouser()" *ngFor="let user of filteredUsers | async" [value]="user.correo" style="font-size: 12px;">
+		      	<img class="example-option-img" *ngIf="user.avatar !== ''" aria-hidden [src]="user.avatar" height="25" width="25">
+		      	<span>{{user.nombres}} {{user.apellidos}}</span>
+		      </mat-option>
+		    </mat-autocomplete>
+		  </mat-form-field>
+	    </form>
+
+	</nav>
+</header>
+
+<router-outlet></router-outlet>

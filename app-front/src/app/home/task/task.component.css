@@ -1,0 +1,54 @@
+.margin-container{
+	margin-top: 9%
+}
+
+.icon-add{
+	color: #326291!important;
+	-webkit-transition: width 1s;
+	-moz-transition: width 1s;
+	-o-transition: width 1s;
+	transition: width 1s;
+	width: 150px;
+}
+
+.bloque-tarea{
+	background-color: white;
+}
+
+.bloque-tarea:hover{
+	background-color: #326291!important;
+}
+
+td{
+	font-size: 14px
+}
+
+th{
+	font-size: 14px
+}
+
+::ng-deep .modal-mt .modal-dialog { 
+     margin-top: 10rem
+}
+
+/*.ng-select.custom ::ng-deep .ng-select-container  {            
+    background-color: #ced4da;
+}
+*/
+@media (max-width: 450px){
+	.margin-container{
+		margin-top: 0px
+	}
+
+	::ng-deep .modal-mt .modal-dialog { 
+	     margin-top: 1rem
+	}
+
+	td{
+		font-size: 12px
+	}
+
+	th{
+		font-size: 12px
+	}
+}

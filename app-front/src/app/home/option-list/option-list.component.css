@@ -1,0 +1,91 @@
+.items-color{
+    background-color: #40515d!important;
+    color: white
+}
+
+.margin-container{
+	margin-top: 10%
+}
+
+#activities-option{
+  height: 40vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: solid 1px #052258ab !important;
+  background-position: top;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#activities-option:hover {
+  -webkit-transform:scale(0.98);
+  -moz-transform:scale(0.98);
+  -ms-transform:scale(0.98);
+  -o-transform:scale(0.98);
+  transform:scale(0.98);
+}
+
+.item-background{
+  background: #052258ab !important;
+  color: white;
+  border: solid 1px #052258ab !important;
+}
+
+.text-white{
+	color: white;
+	text-decoration: none;
+	font-family: cursive;
+}
+
+.btn-service{
+	background-color: #001789!important;
+	color: white;
+}
+
+.btn-gray{
+	background-color: gray!important;
+	color: white;
+}
+
+.font-letters-titles{
+  font-size: 1vw;
+  font-family: fantasy;
+}
+
+.button-money{
+    position: absolute;
+    bottom: 0;
+    color: #fff;
+    background-color: #052258ab !important;
+    border-color: #052258ab !important;
+    width: 40%;
+    font-family: fantasy;
+    font-size: 1vw;
+    border: 1px;
+}
+
+.button-status{
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: #fff;
+  background-color: #153f00ab!important;
+  border-color: #153f00ab !important;
+  width: 60%;
+  font-family: fantasy;
+  font-size: 1vw;
+  border: 1px;
+}
+
+@media (max-width: 450px){
+	.margin-container{
+		margin-top: 0px
+	}
+}
+
+@media (max-width: 768px) {
+  .font-letters-titles{
+    font-size: 14px;
+    font-family: fantasy;
+  }
+}

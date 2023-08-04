@@ -1,0 +1,25 @@
+<div class="container py-4">
+	  <h1 class="mb-4 text-center font-family-fantasy margin-container">Mis Productos</h1>
+	  	<div id="member" class="row" data-ride="carousel">
+			<table class="table bg-white my-3">
+				<thead>
+				  <tr>
+					<th scope="col">#</th>
+					<th scope="col">Nombre del Producto</th>
+					<th scope="col">Precio</th>
+					<th scope="col">Estado de Pago</th>
+					<th scope="col">Comprobante</th>
+				  </tr>
+				</thead>
+				<tbody>
+				  <tr role="button" class="button-container" *ngFor="let order of orders; let indice=index" routerLink="/home/product/{{ order.idProduct }}">
+					<th scope="row">{{ indice + 1 }}</th>
+					<td>{{ getNameProduct(order.idProduct) }}</td>
+					<td>{{ getAmountProduct(order.idProduct) }}</td>
+					<td>{{ order.estado }}</td>
+					<td>{{ order.comprobante }}</td>
+				  </tr>
+				</tbody>
+			  </table>
+	    </div>
+</div>

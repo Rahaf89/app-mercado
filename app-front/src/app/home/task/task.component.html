@@ -1,0 +1,166 @@
+<ng-template #postContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Crear Tarea</h4>
+
+        <button type="button" class="close" aria-label="Close" (click)="d('Cerrar')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+          <div class="col text-center">
+            <div class="form-group">
+               <form class="form-group w-100" [formGroup]="propertyForm" novalidate>
+	                <div class="form-group">
+	                  <input type="text" class="form-control input-lg" name="" placeholder="Nombre" formControlName="Nombre">
+	                </div>
+
+	                <div class="form-group">
+	                  <textarea type="text" style="max-height: 20vh; min-height: 20vh;" class="form-control input-lg" placeholder="Descripcion" formControlName="Descripcion"></textarea>
+	                </div>
+
+                	<ng-select [items]="usuarios" class="custom" bindLabel="fullname" bindValue="username" formControlName="idUser" placeholder="Asignar Usuario">
+					</ng-select>
+
+                   <ng-select [items]="actividades" class="custom" bindLabel="nombre" bindValue="_id" formControlName="idActividad" placeholder="Seleccionar Actividad">
+                	</ng-select>
+
+	                <div class="form-group">
+	                   <button type="button" class="btn btn-primary" id="button_create" [disabled]="propertyForm.invalid" (click)="setTarea();">Crear</button>
+	                </div>
+              </form>
+            </div>
+          </div>
+    </div>
+</ng-template>
+
+<ng-template #putContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Editar Tarea</h4>
+
+        <button type="button" class="close" aria-label="Close" (click)="d('Cerrar')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+          <div class="col text-center">
+            <div class="form-group">
+	                <div class="form-group">
+	                  <input type="text" class="form-control input-lg" name="" placeholder="Nombre" [(ngModel)]="nombrePut">
+	                </div>
+
+	                <div class="form-group">
+	                  <textarea type="text" style="max-height: 20vh; min-height: 20vh;" class="form-control input-lg" placeholder="Descripcion" [(ngModel)]="descripcionPut"></textarea>
+	                </div>
+
+	                <ng-select [items]="usuarios" class="custom" bindLabel="fullname" bindValue="username" placeholder="Asignar Usuario" [(ngModel)]="idUserPut">
+					</ng-select>
+
+					<ng-select [items]="actividades" class="custom" bindLabel="nombre" bindValue="_id" placeholder="Seleccionar Actividad" [(ngModel)]="idActividadPut">
+                	</ng-select>
+
+	                <div class="form-group">
+	                   <button type="button" class="btn btn-primary" id="button_change" (click)="putTarea(idPut);">Cambiar</button>
+	                </div>
+            </div>
+          </div>
+    </div>
+</ng-template>
+
+<ng-template #TareaContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">{{ tarea.nombre }}</h4>
+
+        <button type="button" class="close" aria-label="Close" (click)="d('Cerrar')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+          <div class="col text-justify">
+            <div class="form-group">
+
+                <div class="d-flex">
+                    <p class="col-10 px-0">
+                        <b *ngIf="tarea.status == 'Hecho'" class="bg-success py-2 px-4 rounded-pill text-white"> {{tarea.status}}  </b>
+                        <b *ngIf="tarea.status == 'En progreso'" class="bg-warning py-2 px-4 rounded-pill text-white"> {{tarea.status}}  </b>
+                        <b *ngIf="tarea.status == 'Archivado'" class="bg-secondary py-2 px-4 rounded-pill text-white"> {{tarea.status}}  </b>
+                    </p>
+                    <a routerLink="/home/task" *ngIf="tarea.status !== 'Archivado'" class="text-secondary col-2" (click)="changeTarea(tarea._id, 'Archivado')">
+                        <span class="fa fa-archive fa-1x"></span>
+                        <b style="font-size: 14px" class="mx-2">Archivar</b>
+                    </a>
+                </div>
+
+            	<p><b>Usuario Encargado:</b> {{nombreUsuario}} </p>
+            	<p><b>Actividad Relacionada:</b> {{nombreActividad}} </p>
+            	<p><b>Creado Por:</b> {{tarea.createBy}} </p>
+            	<p><b>Ultima Modificación:</b> {{tarea.time}} </p>
+
+               	{{ tarea.descripcion }}
+            </div>
+          </div>
+          <div class="mt-4 justify-content-center" *ngIf="tarea.createBy == this.username || this.role == 'ADMIN'">
+
+                <div class="col-md-12 text-center py-2">
+      				<a routerLink="/home/task" (click)="editTarea(putContent, tarea._id, tarea.nombre, tarea.descripcion, tarea.idActividad, tarea.idUser, tarea.status)" class="mr-1">
+    		            <span class="fa fa-edit fa-1x"></span>
+    		            <b style="font-size: 14px" class="mx-2">Editar</b>
+    	            </a>
+      				<a routerLink="/home/task" style="color: red" (click)="deleteTarea(tarea._id)">
+    	  				<span class="fa fa-trash fa-1x"></span>
+    	            	<b style="font-size: 14px" class="mx-2">Eliminar</b>
+      				</a>
+                </div>
+
+                <div class="col-md-12 text-center py-2">
+                    <a routerLink="/home/task" *ngIf="tarea.status !== 'Hecho'" class="text-success" (click)="changeTarea(tarea._id, 'Hecho')">
+                        <span class="fa fa-battery-full fa-1x"></span>
+                        <b style="font-size: 14px" class="mx-2">Completar</b>
+                    </a>
+                    <a routerLink="/home/task" *ngIf="tarea.status !== 'En progreso'" class="text-warning" (click)="changeTarea(tarea._id, 'En progreso')">
+                        <span class="fa fa-battery-quarter fa-1x"></span>
+                        <b style="font-size: 14px" class="mx-2">Marcar en progreso</b>
+                    </a>
+              </div>
+  		  </div>
+    </div>
+</ng-template>
+
+<div class="container pt-3">
+	<div class="row justify-content-center px-md-5 pb-4 card margin-container">
+
+		<a routerLink="/home/task" (click)="open(postContent, '', '')" class="icon-add m-4 text-decoration-none">
+	        <li class="fa fa-plus-circle" style="font-size: 2em"></li> 
+	        <b style="font-size: 20px;" class="mx-2">Crear Tarea</b>
+	    </a>
+
+        <div class="d-flex">
+            <a routerLink='/home/task' (click)="moverTipoTarea('')" class="mx-2 my-1" style="font-size: 14px; color: rgb(69, 130, 187)">Todos ({{ cantidadTodos }})</a>
+            <a routerLink='/home/task' (click)="moverTipoTarea('Hecho')" class="mx-2 my-1" style="font-size: 14px; color: rgb(69, 130, 187)">Hechos ({{ cantidadHechos }})</a>
+            <a routerLink='/home/task' (click)="moverTipoTarea('En progreso')" class="mx-2 my-1" style="font-size: 14px; color: rgb(69, 130, 187)">En progreso ({{ cantidadEnProgreso }})</a>
+            <a routerLink='/home/task' (click)="moverTipoTarea('Archivado')" class="mx-2 my-1" style="font-size: 14px; color: rgb(69, 130, 187)">Archivados ({{ cantidadArchivado }})</a>
+        </div>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th style="width: 25%">Nombre</th>
+                <th style="width: 65%">Descripcion</th>
+                <th style="width: 10%">Fecha Modificación</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let tarea of tareas; let indice=index" class="bloque-tarea" (click)="verTarea(TareaContent, tarea)">
+	                <th scope="row">{{tarea.nombre}}</th>
+	                <td>{{tarea.descripcion}}</td>
+	                <td>{{tarea.time}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <button class="btn btn-secondary" (click)="masTareas()" *ngIf="tareas.length >= part" style="font-size: 14px">Mas ...</button>
+    </div>
+</div>

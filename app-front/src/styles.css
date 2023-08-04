@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@ng-select/ng-select/themes/material.theme.css";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+.img-body{
+	background-image: url(assets/img/fondo-amarillo.jpg);
+	background-attachment: fixed;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+html {
+	min-height: 100%;
+	position: relative;
+}
+body {
+	margin: 0;
+}
+footer {
+	background-color: #161c3d!important;
+	width: 100%;
+	color: white;
+}
+
+html {
+	scroll-behavior: smooth;
+}

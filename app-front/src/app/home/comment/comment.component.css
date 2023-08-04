@@ -1,0 +1,129 @@
+.p-3{
+	padding: 15px;
+}
+
+.border-nav{
+	background-color: #569af7;
+}
+
+.text-white{
+	color: white;
+	text-decoration: none;
+	font-family: cursive;
+}
+
+.btn-service{
+	background-color: #132f4c!important;
+	color: white;
+}
+
+.btn-gray{
+	background-color: gray!important;
+	color: white;
+}
+
+/*.btn-service:hover{
+	background-color: white;
+	color: #569af7!important;
+}*/
+
+.bg-blue-black{
+	background-color: #132f4c!important
+}
+
+.position-fixed{
+	position: fixed;
+    width: 100%;
+    z-index: 1;
+}
+
+::ng-deep .modal-mt .modal-dialog { 
+     margin-top: 10rem
+}
+
+.margin-container{
+	margin-top: 9%
+}
+
+.imagen-post{
+	width: 300px;
+	height: auto;
+}
+
+.icon-add{
+/*	width: 85px;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	background-color: white;
+	border-radius: 10em 0 0 10em;*/
+	color: #132f4c!important;
+	-webkit-transition: width 1s;
+	-moz-transition: width 1s;
+	-o-transition: width 1s;
+	transition: width 1s;
+	width: 150px;
+}
+
+/*.icon-add{
+    -webkit-transition-timing-function: linear;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear;
+    transition-timing-function: linear;
+}
+
+.icon-add:hover{
+	width: 100px;
+}*/
+
+.modal-image-responsive-vertical{
+	height: 600px;
+	width: auto;
+}
+
+.modal-image-responsive-horizontal{
+	height: auto;
+	width: 100%;
+}
+
+::ng-deep .modal-image .modal-dialog { 
+	max-width: 80%;
+    width: 80%;
+}
+
+.card-comments-header{
+	border-left: solid 1px rgba(0,0,0,.125); 
+	border-right: solid 1px rgba(0,0,0,.125); 
+	border-bottom: solid 1px rgba(0,0,0,.125);
+	padding: .75rem 1.25rem;
+}
+
+.card-comments-body{
+	border-right: solid 1px rgba(0,0,0,.125); 
+	border-bottom: solid 1px rgba(0,0,0,.125);
+}
+
+
+
+@media (max-width: 600px){
+
+	/*.imagen-post{
+		width: 100%;
+	}
+*/
+	.modal-image-responsive-vertical{
+		height: auto;
+		width: 100%;
+	}
+
+}
+
+@media (max-width: 450px){
+	.margin-container{
+		margin-top: 0px
+	}
+
+	::ng-deep .modal-mt .modal-dialog { 
+	     margin-top: 1rem
+	}
+}

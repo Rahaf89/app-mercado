@@ -1,0 +1,137 @@
+<ng-template #postContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Crear Contacto</h4>
+
+        <button type="button" class="close" aria-label="Close" (click)="d('Cerrar')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+          <div class="col text-center">
+            <div class="form-group">
+               <form class="form-group w-100" [formGroup]="propertyForm" novalidate>
+	                <div class="form-group">
+	                  <input type="text" class="form-control input-lg" name="" placeholder="Nombre" formControlName="Nombre">
+	                </div>
+
+	                <div class="form-group">
+	                  <textarea type="text" style="max-height: 20vh; min-height: 20vh;" class="form-control input-lg" placeholder="Descripcion" formControlName="Descripcion"></textarea>
+	                </div>
+
+	                <div class="form-group">
+	                  <input type="text" class="form-control input-lg" name="" placeholder="Phone" formControlName="Phone">
+	                </div>
+
+	                <div class="form-group">
+						<input type="text" class="form-control input-lg" name="" placeholder="Email" formControlName="Email">
+					  </div>
+
+	                <div class="form-group">
+	                   <button type="button" id="button_agendar" class="btn btn-primary" [disabled]="propertyForm.invalid" (click)="setPartners();">Guardar</button>
+	                </div>
+              </form>
+            </div>
+          </div>
+    </div>
+</ng-template>
+
+<ng-template #putContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Editar Contacto</h4>
+
+        <button type="button" class="close" aria-label="Close" (click)="d('Cerrar')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+          <div class="col text-center">
+            <div class="form-group">
+	                <div class="form-group">
+	                  <input type="text" class="form-control input-lg" name="" placeholder="Nombre" [(ngModel)]="nombrePut">
+	                </div>
+
+	                <div class="form-group">
+	                  <textarea type="text" style="max-height: 20vh; min-height: 20vh;" class="form-control input-lg" placeholder="Descripcion" [(ngModel)]="descripcionPut"></textarea>
+	                </div>
+
+	                <div class="form-group">
+	                  <input type="text" class="form-control input-lg" name="" placeholder="Tipo" [(ngModel)]="phonePut">
+	                </div>
+
+	                <div class="form-group">
+						<input type="email" class="form-control input-lg" name="" placeholder="Email" [(ngModel)]="emailPut">
+					</div>
+
+	                <div class="form-group">
+	                   <button type="button" id="button_cambiar" class="btn btn-primary" (click)="putPartners(idPut);">Guardar</button>
+	                </div>
+            </div>
+          </div>
+    </div>
+</ng-template>
+
+<ng-template #PartnersContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">{{ partner.name }}</h4>
+
+        <button type="button" class="close" aria-label="Close" (click)="d('Cerrar')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+          <div class="col text-justify">
+            <div class="form-group">
+            	<p><b>Nombre:</b> {{partner.name}} </p>
+            	<p><b>Telefono de Contacto:</b> {{partner.phone}}</p>
+            	<p><b>Correo Electronico:</b> {{partner.email}} </p>
+               	{{ partner.description }}
+            </div>
+          </div>
+          <div class="mt-4 justify-content-center" *ngIf="this.role == 'ADMIN'">
+          		<div class="col-md-12 text-center py-2">
+	  				<a routerLink="/home/contact" (click)="editPartners(putContent, partner._id, partner.name, partner.description, partner.phone, partner.email)" class="mr-1">
+			            <span class="fa fa-edit fa-1x"></span>
+			            <b style="font-size: 14px" class="mx-2">Editar</b>
+		            </a>
+	  				<a routerLink="/home/contact" style="color: red" (click)="deletePartners(partner._id)">
+		  				<span class="fa fa-trash fa-1x"></span>
+		            	<b style="font-size: 14px" class="mx-2">Eliminar</b>
+	  				</a>
+  				</div>
+  		  </div>
+    </div>
+</ng-template>
+
+<div class="container pt-3">
+	<div class="row justify-content-center px-md-5 pb-4 card margin-container">
+
+		<a routerLink="/home/contact" (click)="open(postContent, '', '')"
+      	class="icon-add m-4 d-flex text-decoration-none" style="color: #1B0311!important">
+			<li class="fa fa-plus-circle" style="font-size: 2em"></li> 
+			<span style="font-size: 20px;" class="mx-2 my-auto"><b>Agregar datos de un contacto</b></span>
+		</a>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th style="width: 25%">Nombre</th>
+                <th style="width: 65%">Correo Electronico</th>
+                <th style="width: 10%">Telefono</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr role="button" *ngFor="let partner of Partners; let indice=index" class="bloque-partner" (click)="verPartners(PartnersContent, partner)">
+	                <th scope="row">{{partner.name}}</th>
+	                <td>{{partner.email}}</td>
+	                <td>{{partner.phone}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <button class="btn btn-secondary" (click)="masPartners()" *ngIf="Partners.length >= part" style="font-size: 14px">Mas ...</button>
+    </div>
+</div>

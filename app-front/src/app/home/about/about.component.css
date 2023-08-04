@@ -1,0 +1,70 @@
+.p-3{
+	padding: 15px;
+}
+
+.border-nav{
+	background-color: #569af7;
+}
+
+.text-white{
+	color: white;
+	text-decoration: none;
+	font-family: cursive;
+}
+
+.btn-service{
+	background-color: #569af7;
+	color: white;
+}
+
+.btn-service:hover{
+	background-color: white;
+	color: #569af7!important;
+}
+
+.bg-blue-black{
+	background-color: #132f4c!important
+}
+
+.position-fixed{
+	position: fixed;
+    width: 100%;
+    z-index: 1;
+}
+
+.font-family-fantasy{
+	font-family: fantasy;
+}
+
+.color-light-company{
+	color: #569af7!important;
+}
+
+.background-light-company{
+	background-color: #569af7!important;
+	color: white;
+}
+
+.background-light-company:hover{
+	background-color: #132f4c!important;
+}
+
+.btn-welcome{
+	width: 45%; 
+	font-weight: bold; 
+	border-radius: 2rem;
+}
+
+.background-images-platform{
+    height: 400px;
+    border-radius: 0.25rem;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+@media (max-width: 450px){ 
+	.btn-welcome{
+		width: auto;
+	}
+}

@@ -1,0 +1,59 @@
+<!-- Usuario del sistema -->
+<ng-template #postContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+      <h4 class="modal-title">Análisis de posibles Fake New</h4>
+
+      <button type="button" class="close" aria-label="Close" (click)="d('Cerrar')">
+          <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+
+<div class="modal-body">
+  <div class="col text-center">
+    <h5>Texto seleccionado:</h5>
+    {{textoSeleccionadoAnalisis}}
+    <h5>Fake:</h5>
+    {{textoFakeorReal.Fake}} %
+    <h5>Real:</h5>
+    {{textoFakeorReal.Real}} %
+  </div>
+  </div>
+</ng-template>
+
+<div class="container pt-3">
+  <div class="row justify-content-center px-md-5 px-2 py-4 card margin-container">
+        <h3>Publicaciones del usuario en Threads</h3>
+        <br>
+        <div class="input-group">
+          <div class="form-outline">
+            <input placeholder="Usuario de Threads" type="search" id="form1" class="form-control" />
+          </div>
+          <button style="height:38px" type="button" class="btn btn-primary" (click)="buscarUsuario()">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+        
+      <div *ngIf="publicaciones.length==0">
+        <br>
+        <br>
+        <div class="row justify-content-center"> 
+          <p>No hay publicaciones disponibles</p> 
+        </div>
+      </div>
+
+      <div *ngFor="let publicacion of publicaciones; let indice=index" class="card mt-4">
+        <div class="d-flex card-header">
+          <div>
+            <a routerLink="/home/postFakeNews" (click)="open(publicacion.text, postContent)" 
+              class="d-flex text-decoration-none" style="color: black">
+              {{publicacion.text}}
+            </a>
+              
+          </div>
+        </div>
+      <div id="spinner" class="pt-4 text-center" style="display: none">
+          <li class="fa fa-spin fa-spinner fa-2x"></li>
+      </div>
+
+  </div>
+</div>

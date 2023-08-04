@@ -1,0 +1,248 @@
+<ng-template #pagar let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Metodo de Pago</h4>
+
+        <button type="button" class="close" aria-label="Close" (click)="d('Cerrar')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+	<div class="modal-body">
+		<div class="col text-center">
+		  <div class="form-group">
+
+				<div class="card my-3">
+					<div class="text-center">
+						<h4 class="py-3 my-0">Presupuesto</h4>
+
+						<table class="table">
+							<thead>
+								<th scope="col">Nombre del Producto</th>
+								<th scope="col">Codigo</th>
+								<th scope="col">Monto</th>
+								<th scope="col">Moneda</th>
+							</thead>
+							<tbody>
+								<tr>	
+									<td>{{ producto.nombre }}</td>
+									<td>{{ producto.codigo }}</td>
+									<td>{{ producto.precio }}</td>
+									<td><b>{{ producto.moneda }}</b></td>
+								</tr>
+								<tr>	
+									<td><b>Total</b></td>
+									<td></td>
+									<td>{{ producto.precio }}</td>
+									<td><b>{{ checkMoneda(product.moneda) }}</b></td>
+								</tr>
+							</tbody>
+						</table>
+						<!-- <h2> {{ producto.precio }} {{ producto.moneda }}</h2> -->
+					</div>
+			</div>
+
+			 <form class="form-group w-100 card px-md-4 pb-md-4" [formGroup]="propertyForm" novalidate>
+				  <h4 class="pt-3 my-0">Orden de Pago</h4>
+				  
+				  <hr>
+
+				  <div class="form-group">
+					<input type="text" class="form-control input-lg" name="" placeholder="Nombre del Titular" formControlName="Nombre">
+				  </div>
+
+				  <div class="form-group text-left">
+					<input type="number" class="form-control input-lg" name="" placeholder="Numero de Identificación" formControlName="NumeroIdentificacion">
+					<label for="NumeroReferencia" class="text-danger" *ngIf="emptyField('NumeroIdentificacion')" style="font-size: 12px;">
+						<span class="">*</span>
+						Este campo es obligatorio para confirmar el pago realizado.
+					</label>
+				  </div>
+
+				  <div class="form-group text-left">
+					<input type="number" class="form-control input-lg" name="" placeholder="Numero Telefónico" formControlName="NumeroTelefonico">
+					<label for="NumeroReferencia" class="text-danger" *ngIf="emptyField('NumeroTelefonico')" style="font-size: 12px;">
+						<span class="">*</span>
+						Este campo es obligatorio para confirmar el pago realizado.
+					</label>
+				  </div>
+
+				  <div class="form-group text-left">
+					<input type="number" class="form-control input-lg" name="" placeholder="Numero de Cuenta" formControlName="NumeroCuenta">
+					<label for="NumeroReferencia" class="text-danger" *ngIf="emptyField('NumeroCuenta')" style="font-size: 12px;">
+						<span class="">*</span>
+						Este campo es obligatorio para confirmar el pago realizado.
+					</label>
+				  </div>
+
+				  <div class="form-group text-left">
+					<input type="number" class="form-control input-lg" name="NumeroReferencia" placeholder="Numero de Referencia" formControlName="NumeroReferencia">
+					
+					<label for="NumeroReferencia" class="text-danger" *ngIf="emptyField('NumeroReferencia')" style="font-size: 12px;">
+						<span class="">*</span>
+						Este campo es obligatorio para confirmar el pago realizado.
+					</label>
+				  </div>
+
+				  <div class="form-group">
+					<input type="text" class="form-control input-lg" name="" placeholder="Nombre de la Cuenta" formControlName="NombreCuenta">
+				  </div>
+
+				  <div class="form-group">
+					<textarea type="text" style="max-height: 10vh; min-height: 10vh;" class="form-control input-lg" placeholder="Descripcion" formControlName="Descripcion"></textarea>
+				  </div>
+
+				  <div class="form-group text-left">
+					<ng-select [items]="tipos" class="custom" bindLabel="nombre" bindValue="id" formControlName="idTipoPago" placeholder="Seleccionar Método de Pago">
+					</ng-select>
+
+					<label for="NumeroReferencia" class="text-danger" *ngIf="emptyField('idTipoPago')" style="font-size: 12px;">
+						<span class="">*</span>
+						Este campo es obligatorio para confirmar el pago realizado.
+					</label>
+				  </div>
+
+				  <div class="form-group">
+					<button type="button" id="publicar_button" class="btn btn-warning" [disabled]="propertyForm.invalid" (click)="setPayment();">
+						Enviar Orden
+					</button>
+				  </div>
+			</form>
+		  </div>
+		</div>
+  	</div>
+</ng-template>
+
+<ng-template #putContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Producto</h4>
+
+        <button type="button" class="close" aria-label="Close" (click)="d('Cerrar')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+	<div class="modal-body">
+		<div class="col text-center">
+		  <div class="form-group">
+				<div class="form-group">
+				<input type="text" class="form-control input-lg" name="" placeholder="Nombre" [(ngModel)]="PutNombre">
+				</div>
+
+				<div class="form-group">
+				<input type="text" class="form-control input-lg" name="" placeholder="Codigo" [(ngModel)]="PutCodigo">
+				</div>
+
+				<div class="form-group">
+				<input type="text" class="form-control input-lg" name="" placeholder="Precio" [(ngModel)]="PutPrecio">
+				</div>
+
+				<div class="form-group">
+				<input type="text" class="form-control input-lg" name="" placeholder="Cantidad" [(ngModel)]="PutCantidad">
+				</div>
+
+				<ng-select [items]="monedas" class="custom" bindLabel="nombre" bindValue="id" [(ngModel)]="PutMoneda" placeholder="Seleccionar Moneda">
+				</ng-select>
+
+				<ng-select [items]="categorias" class="custom" bindLabel="nombre" bindValue="id" [(ngModel)]="PutIdCategory" placeholder="Seleccionar Categoria">
+				</ng-select>
+
+				<div class="form-group">
+				<textarea type="text" style="max-height: 20vh; min-height: 20vh;" class="form-control input-lg" placeholder="Descripcion" [(ngModel)]="PutDescripcion"></textarea>
+				</div>
+
+				<div class="form-group text-left">
+				<div class="text-md-left">
+					<img [src]="urlPreview" class="my-2" width="150" height="auto" *ngIf="this.urlPreview !== ''"> <br *ngIf="this.urlPreview !== ''">
+					<button class="btn btn-service" id="botonInsertar" (click)="clickInsertarImagen()" *ngIf="this.urlPreview == ''"><i class="fa fa-image fa-1x"></i></button>
+					<button class="btn btn-service" id="botonInsertar" (click)="clickInsertarImagen()" *ngIf="this.urlPreview !== ''"><i class="fa fa-edit fa-1x"></i></button>
+					<button class="ml-2 btn btn-danger" id="botonEliminar" (click)="clickEliminarImagen()" *ngIf="this.urlPreview !== ''"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></button>
+				</div>
+				<input type="file" accept="image/png,image/jpeg" (change)="capturarImagen($event)" name="imagen" id="imagen" placeholder="Insertar Imagen*" style="width:100%; display: none">
+				</div>
+
+				<div class="form-group">
+					<button type="button" id="publicar_button" class="btn btn-service" (click)="updateProducto();">Editar</button>
+				</div>
+		  </div>
+		</div>
+  	</div>
+</ng-template>
+ 
+ <div class="container padding-container d-flex">
+	<div class="row">
+		<div class="col-md-8 col-12 p-2 mb-md-3">
+			<div class="card">
+				<div class="card-header">
+					<b>{{ producto.nombre }}</b>
+				</div>
+
+				<div class="card-body">
+					<img src="http://127.0.0.1:8080/products/{{ producto.imagen }}" alt="" style="width: 100%; border-radius: 8px;">
+
+					<h5 class="my-3 text-center"><b>Detalles del Producto</b></h5>
+
+					<div class="my-2">
+						<h6><b>Estado:</b> {{ producto.estado }}</h6>
+						<h6><b>Monto:</b> {{ producto.precio }} {{ producto.moneda }}</h6>
+						<h6><b>Codigo:</b> {{ producto.codigo }}</h6>
+					</div>
+					
+					<h5 class="my-3 text-center"><b>Descripción</b></h5>
+					<div class="my-2">{{ producto.descripcion }}</div>
+				
+					<div class="container mt-4">
+						<div class="row">
+							<div class="col"><button class="btn btn-warning w-100" (click)="open(pagar)"><b>Pagar</b></button></div>
+							<div class="col" *ngIf="this.role == 'ADMIN'"><button class="btn btn-primary w-100" (click)="openEdit(putContent)"><b>Editar</b></button></div>
+							<div class="col" *ngIf="this.role == 'ADMIN'"><button class="btn btn-danger w-100" (click)="deleteProductShow(producto._id.$oid)"><b>Eliminar</b></button></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-12 mb-md-3">
+			<div class="card my-2">
+				<div class="card-header">
+					<b>Ordenes de compra realizadas</b>
+				</div>
+
+				<div class="card mx-3 my-2 p-3" style="font-size: 13px;" *ngFor="let order of orders; let indice=index">
+					Se ha realizado una orden de compra con el identificador {{ order._id.$oid }} <br>
+					<span class="fw-bold"><b>Estado:</b> {{ order.estado }}</span>
+					<span class="fw-bold"><b>Usuario:</b> {{ order.idUser }}</span> 
+
+					<a role="button" (click)="aprobarOrden(order._id.$oid)" *ngIf="order.estado == 'En progreso' && usuario.role == 'ADMIN'"><i class="fa fa-edit my-3" ></i> Aprobar </a>
+					<a *ngIf="order.estado == 'Aprobado' && (usuario.role == 'ADMIN' ||  usuario.role == 'USER') "><i class="fa fa-check my-3" ></i> Aprobado </a>
+				</div>
+			</div>
+
+			<div class="card my-2">
+				<div class="card-header">
+					<b>Comentarios del Producto</b>
+				</div>
+				<div class="card mx-3 my-2 p-3" style="font-size: 13px;" *ngFor="let comment of comments; let indice=index">
+					Se ha realizado el siguiente comentario:<br>
+					<span class="fw-bold"><b>Descripción:</b> {{ comment.descripcion	}}</span>
+					<span class="fw-bold"><b>Estado:</b> {{ comment.puntaje_valor}}</span>
+					<span class="fw-bold"><b>Usuario:</b> {{ comment.idUser }}</span> 
+				</div>
+
+				<div class="m-2 p-2" style="font-size: 13px;">
+					<p *ngIf="comments.length==0">No hay comentarios hasta ahora. Se el primero en comentar</p>
+
+					<div class="form">
+						<div class="form-group">
+							<textarea #comentarioProducto id="comentarioProducto" type="text" style="max-height: 10vh; min-height: 10vh; font-size: 13px;" class="form-control input-lg" placeholder="Descripcion"></textarea>
+						</div>
+
+						<div class="form-group">
+							<button type="button" id="comentar_button" class="btn btn-primary" style="font-size: 13px;" (click)="comentar(comentarioProducto.value)">
+								Comentar
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

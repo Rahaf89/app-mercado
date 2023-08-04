@@ -1,0 +1,193 @@
+<!-- Usuario del sistema -->
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Editar Usuario</h4>
+
+        <button type="button" class="close" aria-label="Close" (click)="d('Cerrar')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+          <div class="text-center">
+
+          	<div class="d-flex">
+	            <div class="form-group col px-md-2 p-0 text-left">
+	            	<label style="font-weight: bold;" for="nombre">Nombres</label>
+	              <input type="text" class="form-control input-lg" name="nombre" id="nombre"  placeholder="Nombre" [(ngModel)]="nombres">
+	            </div>
+	            <div class="form-group col px-md-2 p-0 text-left">
+	            	<label style="font-weight: bold;" for="apellido">Apellidos</label>
+	              <input type="text" class="form-control input-lg" name="apellido" id="apellido" placeholder="Apellido" [(ngModel)]="apellidos">
+	            </div>
+            </div>
+
+            <!-- <div class="form-group px-md-2 text-left">
+            	<label style="font-weight: bold;" for="usernameOld">Nombre de Usuario</label>
+              <input type="text" class="form-control input-lg" name="usernameOld" id="usernameOld" placeholder="Nombre de Usuario" [(ngModel)]="usernameOld">
+            </div> -->
+
+            <div class="form-group px-md-2 text-left">
+            	<label style="font-weight: bold;" for="email">Correo Electronico</label>
+              <input type="text" class="form-control input-lg" name="email" id="email" placeholder="Correo Electronico" [(ngModel)]="correo">
+            </div>
+
+            <div class="form-group px-md-2 text-left">
+            	<label style="font-weight: bold;" for="cedula">Cedula</label>
+              <input type="text" class="form-control input-lg" name="cedula" id="cedula" placeholder="Cedula" [(ngModel)]="cedula">
+            </div>
+
+            <div class="form-group px-md-2 text-left">
+            	<label style="font-weight: bold;" for="puesto">Cargo</label>
+              <input type="text" class="form-control input-lg" name="puesto" id="puesto" placeholder="Ocupación en la organización" [(ngModel)]="cargo">
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <button class="btn btn-primary" (click)="changeUser()" type="submit">Editar</button>
+              </div>
+            </div>
+
+          </div>
+    </div>
+</ng-template>
+
+<ng-template #contentConfig let-c="close" let-d="dismiss">
+		<div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="d('Cerrar')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+    		<div class="accordion" id="accordionExample">
+				  <div class="card" *ngIf="this.roleCurrent == 'ADMIN'">
+				    <div class="card-header" id="headingOne">
+				      <h2 class="mb-0">
+				        <button class="btn btn-link btn-block text-left collapsed text-decoration-none text-secondary" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+				          <b> Privilegios de Administrador. </b>
+				        </button>
+				      </h2>
+				    </div>
+
+				    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+				      <div class="card-body">
+				        	<!-- Default switch -->
+							<div class="custom-control custom-switch">
+								<input type="checkbox" (click)="convertirAdmin()" class="custom-control-input" id="adminSwitches" *ngIf="this.role == 'ADMIN'" checked>
+								<input type="checkbox" (click)="convertirAdmin()" class="custom-control-input" id="adminSwitches" *ngIf="this.role == 'USER'">
+								<label class="custom-control-label" for="adminSwitches">Convertir en Usuario Administrador.</label>
+							</div>
+				      </div>
+				    </div>
+				  </div>
+				  <div class="card">
+				    <div class="card-header" id="headingTwo">
+				      <h2 class="mb-0">
+				        <button class="btn btn-link btn-block text-left collapsed text-decoration-none text-secondary" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+				         <b> Cambiar contraseña. </b>
+				        </button>
+				      </h2>
+				    </div>
+				    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+				      <div class="card-body">
+				        <form class="form-group w-100" [formGroup]="propertyForm" novalidate>
+				        			<div class="form-group">
+                        <input type="password" class="form-control input-lg" placeholder="Contraseña actual" formControlName="password" id="password">
+                      </div>
+
+                      <div class="form-group">
+                        <input type="password" class="form-control input-lg" placeholder="Contraseña nueva" formControlName="passwordNew" id="passwordNew">
+                      </div>
+
+                      <div class="form-group">
+                         <button type="button" class="btn btn-secondary" [disabled]="propertyForm.invalid" (click)="changePassword();">Cambiar Contraseña</button>
+                      </div>
+				        </form>
+				      </div>
+				    </div>
+				  </div>
+				  <div class="card">
+					    <div class="card-header" id="headingThree">
+					      <h2 class="mb-0">
+					        <button class="btn btn-link btn-block text-left collapsed text-decoration-none text-secondary" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+					         <b> Eliminar Cuenta </b>
+					        </button>
+					      </h2>
+					    </div>
+					    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+					      <div class="card-body">
+											<button class="btn btn-danger" (click)="eliminarUsuario()">Eliminar esta cuenta.</button>
+					      </div>
+					    </div>
+				  </div>
+				</div>
+    </div>
+</ng-template>
+
+<div class="container pt-3 justify-content-center">
+	<div class="row mx-auto mb-4 card margin-container">
+		
+		<div class="py-4 card-header">
+
+			<div class="text-left">
+
+				<div class="d-flex">
+					<div class="foto-perfil">
+						<a>
+							<img src="/assets/img/perfil-user.jpg" class="tamaño-imagen">
+						</a>
+					</div>		
+
+					<div class="text-center px-md-5 px-2">
+						<h4 class="my-3 responsive-280">{{ usuario.nombres }} {{ usuario.apellidos }}</h4>
+						
+						<div class="d-flex justify-content-center">
+								<button class="btn py-0 px-md-3 px-3" *ngIf="this.usernameCurrent == this.username || this.roleCurrent == 'ADMIN'" style="background-color: #35134c!important; color: white;" (click)="open(content)">Editar</button>
+								<a (click)="open(contentConfig)" *ngIf="this.usernameCurrent == this.username || this.roleCurrent == 'ADMIN'" class="ml-2" style="color: #3d556f!important;"><li class="fa fa-cog fa-2x"></li></a>
+						</div>
+					</div>
+				</div>
+
+				<div class="container mt-2">
+					<div class="justify-content-center">
+						<span style="font-size: 14px; font-family: cursive;">{{ usuario.username }}</span> 
+					</div>
+					<div class="justify-content-center">
+						<span style="font-size: 14px; font-family: cursive;">{{ usuario.puesto }}</span> 
+					</div>
+					<div class="justify-content-center">
+						<span style="font-size: 14px; font-family: cursive;"><b>{{ usuario.role }}</b></span> 
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="card-body px-4 py-0">
+
+			<h6 class="text-center my-3">Pagos Realizados</h6>
+			<table class="table">
+	            <thead>
+		            <tr>
+		                <th style="width: 25%">Usuario</th>
+		                <th style="width: 25%">Estado</th>
+		                <th style="width: 25%">Nombre del Producto</th>
+						<th style="width: 25%">Monto</th>
+		            </tr>
+		            </thead>
+		            <tbody>
+		            <tr *ngFor="let order of orders; let indice=index" class="bloque-activity">
+			                <th scope="row">{{ usuario.nombres }} {{ usuario.apellidos }}</th>
+			                <td>{{ order.estado }}</td>
+			                <td>{{ getProduct(order.idProduct) }}</td>
+							<td>{{ getAmountProduct(order.idProduct) }}</td>
+		            </tr>
+	            </tbody>
+        	</table>
+
+		</div>
+
+	</div>
+</div>

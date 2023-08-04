@@ -1,0 +1,232 @@
+<!-- Usuario del sistema -->
+
+<!-- Publicaciones -->
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Editar Publicación</h4>
+
+        <button type="button" class="close" aria-label="Close" (click)="d('Cerrar')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+          <div class="col text-center">
+            <div class="form-group mb-1">
+              <textarea type="text" class="form-control input-lg" style="max-height: 20vh; min-height: 20vh;" placeholder="Descripcion" [(ngModel)]="descriptionPut"></textarea>
+            </div>
+
+             <div class="form-group text-left">
+
+              <div class="text-md-left">
+
+                <img [src]="urlPreview" class="my-2" width="150" height="auto" *ngIf="this.urlPreview !== ''"> <br *ngIf="this.urlPreview !== ''">
+
+                <button class="btn btn-service" id="botonInsertar" (click)="clickInsertarImagenPut()" *ngIf="this.urlPreview == ''"><i class="fa fa-image fa-1x"></i></button>
+                <button class="btn btn-service" id="botonInsertar" (click)="clickInsertarImagenPut()" *ngIf="this.urlPreview !== ''"><i class="fa fa-edit fa-1x"></i></button>
+                <button class="ml-2 btn btn-danger" id="botonEliminar" (click)="clickEliminarImagen()" *ngIf="this.urlPreview !== ''"><i class="fa fa-trash fa-1x"></i></button>
+
+              </div>
+              
+              <input type="file" accept="image/png,image/jpeg" (change)="capturarImagen($event)" name="imagen" id="imagenPut" placeholder="Insertar Imagen*" style="width:100%; display: none">
+
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <button class="btn btn-service" id="cambiar_img_button" (click)="putPublicacion(idPut)" type="submit">Cambiar</button>
+              </div>
+            </div>
+
+          </div>
+    </div>
+</ng-template>
+
+<ng-template #postContent let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Publicar</h4>
+
+        <button type="button" class="close" aria-label="Close" (click)="d('Cerrar')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+          <div class="col text-center">
+            <div class="form-group">
+               <form class="form-group w-100" [formGroup]="propertyForm" novalidate>
+                      <div class="form-group mb-1">
+                        <textarea type="text" style="max-height: 20vh; min-height: 20vh;" class="form-control input-lg" placeholder="Escribir" formControlName="Descripcion" id="id_descripcion"></textarea>
+                      </div>
+
+                      <div class="form-group text-left">
+
+                        <div class="text-md-left">
+
+                          <img [src]="urlPreview" class="my-2" width="150" height="auto" *ngIf="this.urlPreview !== ''"> <br *ngIf="this.urlPreview !== ''">
+
+                          <button class="btn btn-service" id="botonInsertar" (click)="clickInsertarImagen()" *ngIf="this.urlPreview == ''"><i class="fa fa-image fa-1x"></i></button>
+
+                          <button class="btn btn-service" id="botonInsertar" (click)="clickInsertarImagen()" *ngIf="this.urlPreview !== ''"><i class="fa fa-edit fa-1x"></i></button>
+
+                          <button class="ml-2 btn btn-danger" id="botonEliminar" (click)="clickEliminarImagen()" *ngIf="this.urlPreview !== ''"><i class="fa fa-trash fa-1x" aria-hidden="true"></i></button>
+
+                        </div>
+                        <input type="file" accept="image/png,image/jpeg" (change)="capturarImagen($event)" name="imagen" id="imagen" placeholder="Insertar Imagen*" style="width:100%; display: none">
+                      </div>
+
+                      <div class="form-group">
+                         <button type="button" id="publicar_button" class="btn btn-service" [disabled]="propertyForm.invalid" (click)="setPublicaciones();">Publicar</button>
+                      </div>
+              </form>
+            </div>
+          </div>
+    </div>
+</ng-template>
+
+<ng-template #imageContent let-c="close" let-d="dismiss">
+    <div class="modal-body p-0">
+          <div class="col text-center p-0" style="background-color: black;">
+            <img id="imagen-modal" src="{{imagePut}}" 
+                 class="modal-image-responsive-vertical"
+                 *ngIf="getHeightImagePost(idPut) > getWidthImagePost(idPut)" >
+
+             <img id="imagen-modal" src="{{imagePut}}" 
+                 class="modal-image-responsive-horizontal"
+                 *ngIf="getHeightImagePost(idPut) < getWidthImagePost(idPut)" >
+          </div>
+    </div>
+</ng-template>
+
+<!-- Comentarios -->
+
+<ng-template #putComment let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Editar Comentario</h4>
+
+        <button type="button" class="close" aria-label="Close" (click)="d('Cerrar')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+          <div class="col text-center">
+            <div class="form-group mb-1">
+              <textarea type="text" class="form-control input-lg" style="max-height: 20vh; min-height: 20vh;" placeholder="Descripcion" [(ngModel)]="descriptionPut"></textarea>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <button class="btn btn-service" id="cambiar_comment_button" (click)="putComentario(idPut)" type="submit">
+                	Editar Comentario
+                </button>
+              </div>
+            </div>
+
+          </div>
+    </div>
+</ng-template>
+
+<ng-template #postComment let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">Añadir Comentario</h4>
+
+        <button type="button" class="close" aria-label="Close" (click)="d('Cerrar')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+          <div class="col text-center">
+            <div class="form-group">
+               <form class="form-group w-100" [formGroup]="propertyForm" novalidate>
+                      <div class="form-group mb-1">
+                        <textarea type="text" style="max-height: 20vh; min-height: 20vh;" class="form-control input-lg" placeholder="Escribir" formControlName="Descripcion" id="id_descripcion"></textarea>
+                      </div>
+
+                      <div class="form-group">
+                         <button type="button" id="comentar_button" class="btn btn-service" [disabled]="propertyForm.invalid" (click)="setComentario();">Comentar</button>
+                      </div>
+              </form>
+            </div>
+          </div>
+    </div>
+</ng-template>
+
+<div class="container pt-3">
+  <div class="row justify-content-center px-md-5 px-2 py-4 card margin-container">
+  	<div class="card mt-4">
+	  	<div class="d-flex card-header">
+		  <div style="overflow: hidden;width: 50px;height: 50px;border-radius: 50%;">
+		    <a class="text-decoration-none" [routerLink]="['/home/profile', publicacion.idUser]" >
+		        <img src="{{publicacion.avatar}}" width="50" height="auto" style="border-radius: 100px; margin-right: 10px;"> 
+		    </a>
+		  </div>
+		  
+		  <div class="ml-2">
+		     <a class="text-decoration-none text-dark" [routerLink]="['/home/profile', publicacion.idUser]" > <b style="font-size: 1rem"> {{publicacion.idUser}} </b> <br> </a>
+		    <span style="font-size: 13px"> {{ publicacion.time }} </span>
+		  </div>
+		</div>
+		  <div class="text-md-left text-center card-body">
+		    <a (click)='openImage(imageContent, publicacion._id, publicacion.imagen, publicacion.descripcion)' class="text-decoration-none" *ngIf="publicacion.imagen !== ''">
+		      <img src="{{publicacion.imagen}}" *ngIf="publicacion.imagen !== ''" class="imagen-post rounded" id="imagen-post-{{publicacion._id}}"> 
+		    </a>
+
+		     <p class="py-3 text-left">{{publicacion.descripcion}}</p>
+		  </div>
+
+		<div style="display:flex" class="justify-content-center card-footer" *ngIf="publicacion.idUser == this.username || this.role == 'ADMIN'">
+		  <a routerLink="/home/post/{{this.idPublicacion}}" id="btn-comment" class="mr-1 text-dark text-decoration-none" (click)="open(postComment, publicacion._id, '', '')">
+		    <span class="fa fa-comment fa-1x"></span>
+		    <b style="font-size: 14px;" class="mx-2">Comentar</b>
+		  </a>
+		  <a routerLink="/home/post/{{this.idPublicacion}}" class="mr-1 text-decoration-none text-primary" (click)="open(content, publicacion._id, publicacion.descripcion, publicacion.imagen)">
+		    <span class="fa fa-edit fa-1x"></span>
+		    <b style="font-size: 14px;" class="mx-2">Editar</b>
+		  </a>
+		  <a routerLink="/home/post/" (click)="deletePublicacion(publicacion._id)" class="text-decoration-none text-danger">
+		    <span class="fa fa-trash fa-1x"></span>
+		    <b style="font-size: 14px;" class="mx-2">Eliminar</b>
+		  </a>
+	  	</div>
+	 </div>
+
+	 <div class="d-md-flex" *ngFor="let comentario of comentarios; let indice=index">
+
+	 	<div class="col-md-2 col-12 d-flex card-comments-header">
+
+	 		<div style="overflow: hidden;width: 30px;height: 30px;border-radius: 50%;">
+		    	<a class="text-decoration-none" [routerLink]="['/home/profile', comentario.idUser]" >
+		        	<img src="{{comentario.avatar}}" width="30" height="auto" style="border-radius: 100px; margin-right: 10px;"> 
+		   		</a>
+		 	</div>
+
+		 	<div class="ml-2">
+			    <a class="text-decoration-none text-dark" [routerLink]="['/home/profile', comentario.idUser]" > <b style="font-size: 0.8rem"> {{comentario.idUser}} </b> <br> 
+			    </a>
+			    <span style="font-size: 10px"> {{ comentario.time }} </span>
+		  	</div>
+
+		</div>
+
+		<div class="p-2 col card-comments-body">
+			<p style="font-size: 13px"> {{ comentario.descripcion }} </p>
+
+			<a routerLink="/home/post/{{this.idPublicacion}}" *ngIf="comentario.idUser == this.username || this.role == 'ADMIN'" (click)="open(putComment, comentario._id, comentario.descripcion, '')" class="text-decoration-none text-primary">
+			    <b style="font-size: 12px;" class="mx-2">Editar</b>
+			</a>
+
+			<a routerLink="/home/post/{{this.idPublicacion}}" *ngIf="comentario.idUser == this.username || this.role == 'ADMIN'" (click)="deleteComentario(comentario._id)" class="text-decoration-none text-danger">
+			    <b style="font-size: 12px;" class="mx-2">Eliminar</b>
+			</a>
+		</div>
+	 	
+	 </div>
+
+      <div id="spinner" class="pt-4 text-center" style="display: none">
+          <li class="fa fa-spin fa-spinner fa-2x"></li>
+      </div>
+
+  </div>
+</div>

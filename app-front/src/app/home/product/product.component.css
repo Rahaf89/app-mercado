@@ -1,0 +1,53 @@
+.padding-container{
+	padding-top: 8rem
+}
+
+.height-panel{
+	background-color: #f7f7f7;
+	max-height: 68vh;
+    overflow-y: auto;
+}
+
+.modal-image-responsive-vertical{
+	height: 600px;
+	width: auto;
+}
+
+.modal-image-responsive-horizontal{
+	height: auto;
+	width: 100%;
+}
+
+.btn-service{
+	background-color: #001789!important;
+	color: white;
+}
+
+::ng-deep .modal-image .modal-dialog { 
+	max-width: 80%;
+    width: 80%;
+}
+
+@media (max-width: 600px){
+	.modal-image-responsive-vertical{
+		height: auto;
+		width: 100%;
+	}
+
+}
+
+
+@media (max-width: 768px){
+	.margin-container{
+		margin-top: 0px
+	}
+
+	.height-panel{
+		max-height: 73vh;
+	}
+
+	::ng-deep .modal-mt .modal-dialog { 
+	     margin-top: 1rem
+	}
+
+}

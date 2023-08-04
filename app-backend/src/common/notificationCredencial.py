@@ -1,0 +1,3 @@
+VAPID_PUBLIC_KEY = "BDCbsQ4yJk5Qvuk3r8qPrB0n7kDae4Naq4YHlM6X5xwQv5iilLgKrOWe2GFS6Ew-qzAQVa09Yv-Mavd4ZM_9wvY"
+VAPID_PRIVATE_KEY = "3cfP8I7iirHPmhcvMraAhZkQ4t3Bv3MiLgApo0T0jIw"
+VAPID_CLAIM_EMAIL = "mailto:javiloria100@gmail.com"

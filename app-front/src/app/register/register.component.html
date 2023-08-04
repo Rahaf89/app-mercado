@@ -1,0 +1,152 @@
+<!-- register.component.html -->
+
+<div  class="register">
+  <form *ngIf="!bSend" class="custom-form" method="post">
+<!--     <h1>Register</h1> -->
+  
+  <div class="mb-3">
+    <a class="mr-3" title="Regresar" routerLink = "/">
+      <li class="fa fa-arrow-circle-left fa-2x" style="color: gray;"></li>
+    </a>
+
+    <span style="font-size: 1.8rem; color: #1B0311!important">Home</span>
+  </div>
+
+  <div class="d-md-flex d-block">
+    <div class="width-part">
+      <span class="subtitulo-form ml-1"> 
+       <b>Nombres <strong style="color:red">*</strong></b>
+      </span>
+      <input
+        type="text"
+        [(ngModel)]="nombres"
+        name="nombres"
+        placeholder="Escriba su nombres"
+        required="required"
+      />
+    </div>
+
+    <div class="width-part ml-md-2">
+      <span class="subtitulo-form ml-1"> 
+        <b>Apellidos <strong style="color:red">*</strong></b>
+      </span>
+      <input
+        type="text"
+        [(ngModel)]="apellidos"
+        name="apellidos"
+        placeholder="Escriba su apellidos"
+        required="required"
+      />
+    </div>
+  </div>
+
+  <!-- <div>
+    <span class="subtitulo-form ml-1"> 
+        <b>Nombre de usuario <strong style="color:red">*</strong></b> <br>
+    </span>
+    <input
+      type="text"
+      [(ngModel)]="username"
+      name="username"
+      placeholder="Escriba un nombre de usuario"
+      required="required"
+    />
+  </div> -->
+
+  <div>
+    <span class="subtitulo-form ml-1"> 
+       <b>Correo Electronico <strong style="color:red">*</strong></b>
+    </span>
+    <input
+      type="email"
+      [(ngModel)]="correo"
+      name="correo"
+      placeholder="Escriba su correo electronico (Debe ser uno existente)"
+      required="required"
+    />
+  </div>
+  <div>
+    <span class="subtitulo-form ml-1"> 
+        <b>Documento de Identidad <strong style="color:red">*</strong></b>
+    </span>
+    <input
+      type="number"
+      [(ngModel)]="cedula"
+      name="cedula"
+      placeholder="Numero telefónico"
+      required="required"
+    />
+  </div>
+  <div>
+    <span class="subtitulo-form ml-1"> 
+        <b>Puesto u ocupación <strong style="color:red">*</strong></b>
+    </span>
+    <input
+      type="text"
+      [(ngModel)]="puesto"
+      name="puesto"
+      placeholder="Puesto u ocupación desempeñado en la organización*"
+      required="required"
+    />
+  </div>
+  <div>
+      <span class="subtitulo-form ml-1"> 
+          <b>Contraseña <strong style="color:red">*</strong></b>
+      </span>
+      <input
+        type="password"
+        [(ngModel)]="password"
+        name="password"
+        placeholder="Contraseña"
+        required="required"
+      />
+      <input
+        type="password"
+        [(ngModel)]="confirmPassword"
+        name="confirmPassword"
+        placeholder="Vuelva a colocar la Contraseña"
+        required="required"
+      />
+  </div>
+
+  <div>
+    <span class="subtitulo-form ml-1" *ngIf="InequalsPassword()"> 
+      <b><strong style="color:rgb(131, 131, 41)"><i class="fa fa-exclamation-triangle"></i> Los dos campos deben tener la misma contraseña</strong></b>
+    </span>
+
+    <span class="subtitulo-form ml-1" *ngIf="EqualsPassword()"> 
+      <b><strong style="color:green"><i class="fa fa-check"></i> Confirmación exitosa </strong></b>
+    </span>
+  </div>
+  <!-- <div>
+    <div *ngIf="this.urlPreview !== ''" class="position-relative text-center">
+      <a class="fa fa-times bg-danger text-white position-absolute p-1 text-decoration-none" 
+      (click)="clickEliminarImagen()"></a>
+      <img [src]="urlPreview" width="150" height="auto" > 
+      <br>
+    </div>
+
+    <input
+      accept="image/png,image/jpeg"
+      type="file"
+      (change)="capturarImagen($event)"
+      name="avatar"
+      id="avatar"
+      placeholder="Ingrese su foto de perfil*"
+      style="display: none;"
+    />
+
+    <button (click)="clickInsertarImagen()">Agregar una foto de Perfil</button>
+  </div> -->
+<!--   <select [(ngModel)]="role"
+          name="role">
+    <option value="USER">USER</option>
+    <option value="ADMIN">ADMIN</option>
+  </select> -->
+    <button type="submit" (click)="register()" id="register_button" [disabled] = "InequalsPassword()">Registrarse</button>
+  </form>
+
+<!--   	<div *ngIf="bSend" class="p-5 card text-center">
+		<h1>Gracias por enviarnos tu petición!</h1>
+	</div> -->
+</div>

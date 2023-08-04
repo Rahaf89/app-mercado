@@ -1,0 +1,10 @@
+.margin-container{
+	margin-top: 9%
+}
+
+
+@media (max-width: 768px){
+	.margin-container{
+		margin-top: 0px
+	}
+}

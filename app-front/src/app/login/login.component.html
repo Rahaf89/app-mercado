@@ -1,0 +1,43 @@
+<!-- login.component.html -->
+
+<div class="login">
+
+  <form class="custom-form" method="post">
+
+    <div class="mb-3">
+      <a routerLink="/" class="mr-3" title="Ir a Home">
+        <li class="fa fa-home fa-2x" style="color: gray;"></li>
+      </a>
+    </div>
+
+    <div class="text-center">
+      <a routerLink="/"><img src="assets/img/icono-mercado.jpg" style="border-radius: 50%;" width="100" height="100"></a>
+    </div>
+   <!--  <h1>Login</h1> -->
+    <input
+      type="email"
+      name="idUser"
+      [(ngModel)]="idUser"
+      placeholder="Nombre de usuario o Correo electronico"
+      required="required"
+    />
+    <input
+      type="password"
+      name="password"
+      [(ngModel)]="password"
+      placeholder="Contraseña"
+      required="required"
+    />
+    <button type="submit" (click)="login()" id="login_button">Iniciar Sesión</button>
+
+    <div class="text-center mt-3">
+        <a routerLink="/forgotPassword" style="color: #1b21a7;"> Recuperar Contraseña </a>
+    </div>
+
+    <div class="text-center mt-1" style="color: #4176e0;">
+        ¿No tienes una cuenta? Registrate <a href="#" routerLink="/register" style="color: #1b21a7;"> aquí</a>
+    </div>
+
+  </form>
+</div>
+

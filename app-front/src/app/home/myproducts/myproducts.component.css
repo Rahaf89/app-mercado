@@ -1,0 +1,30 @@
+
+.text-member-center{
+	color: #132f4c;
+    font-weight: bold;
+    font-family: initial;
+    font-size: 20px;
+}
+
+.job-member{
+	font-weight: bold;
+    font-family: initial;
+}
+
+.image-circle{
+	width:250px;
+	height:250px;
+	border-radius:150px;
+}
+
+.font-family-fantasy{
+	font-family: fantasy;
+}
+
+.margin-container{
+	margin-top: 10%
+}
+
+.button-container:hover{
+	background-color: aliceblue;
+}
